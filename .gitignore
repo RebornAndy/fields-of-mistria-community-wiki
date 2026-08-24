@@ -7,3 +7,5 @@ dist/
 .wrangler/
 *.tsbuildinfo
 .env.local
+
+.vercel/
