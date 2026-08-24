@@ -11,6 +11,12 @@ const frontmatterSchema = z.object({
   locale: z.enum(["en", "zh"]),
 });
 
+const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+function invalidFrontmatterError(locale: string, slug: string) {
+  return new Error(`Invalid frontmatter for ${locale}/${slug}`);
+}
+
 export type CharacterArticle = {
   frontmatter: {
     title: string;
@@ -25,19 +31,40 @@ export async function loadCharacterArticle(
   locale: Locale,
   slug: string,
 ): Promise<CharacterArticle> {
-  const articlePath = path.join(
+  if ((locale !== "en" && locale !== "zh") || !slugPattern.test(slug)) {
+    throw invalidFrontmatterError(locale, slug);
+  }
+
+  const charactersDirectory = path.resolve(
     process.cwd(),
     "content",
     locale,
     "characters",
-    `${slug}.mdx`,
   );
+  const articlePath = path.resolve(charactersDirectory, `${slug}.mdx`);
+  const relativePath = path.relative(charactersDirectory, articlePath);
+
+  if (relativePath.startsWith("..") || path.isAbsolute(relativePath)) {
+    throw invalidFrontmatterError(locale, slug);
+  }
+
   const file = await readFile(articlePath, "utf8");
-  const parsed = matter(file);
+  let parsed: ReturnType<typeof matter>;
+
+  try {
+    parsed = matter(file);
+  } catch {
+    throw invalidFrontmatterError(locale, slug);
+  }
+
   const result = frontmatterSchema.safeParse(parsed.data);
 
-  if (!result.success) {
-    throw new Error(`Invalid frontmatter for ${locale}/${slug}`);
+  if (
+    !result.success ||
+    result.data.locale !== locale ||
+    result.data.slug !== slug
+  ) {
+    throw invalidFrontmatterError(locale, slug);
   }
 
   return { frontmatter: result.data, source: parsed.content };
