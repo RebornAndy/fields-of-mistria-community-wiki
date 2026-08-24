@@ -32,9 +32,10 @@ export function CharacterInfobox({
     <section className="character-infobox" aria-labelledby="character-name">
       <h2 id="character-name">{character.name}</h2>
       <div className="character-infobox-portrait">
-        {/* Native images preserve the source wiki's pixel-art rendering. */}
+        {/* Native local images keep the placeholder pixel art crisp. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          className="pixel-art"
           src={character.portrait}
           alt={character.name}
           width="280"

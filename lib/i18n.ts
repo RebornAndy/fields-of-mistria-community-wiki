@@ -4,6 +4,7 @@ export type UiDictionary = {
   home: string;
   characters: string;
   search: string;
+  searchAction: string;
   noResults: string;
   language: string;
 };
@@ -13,6 +14,7 @@ const dictionaries: Record<Locale, UiDictionary> = {
     home: "Home",
     characters: "Characters",
     search: "Search the wiki",
+    searchAction: "Search",
     noResults: "No matching page found.",
     language: "Language",
   },
@@ -20,6 +22,7 @@ const dictionaries: Record<Locale, UiDictionary> = {
     home: "首页",
     characters: "角色",
     search: "搜索 Wiki",
+    searchAction: "搜索",
     noResults: "没有找到匹配页面。",
     language: "语言",
   },

@@ -79,7 +79,7 @@ export function WikiSearch({ locale }: { locale: Locale }) {
         type="search"
         value={query}
       />
-      <button type="submit">Search</button>
+      <button type="submit">{copy.searchAction}</button>
       {hasNoResults ? (
         <p aria-live="polite" className="search-empty-state">
           {copy.noResults}

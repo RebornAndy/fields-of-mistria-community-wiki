@@ -9,6 +9,9 @@ export default defineConfig({
       "next/navigation": fileURLToPath(
         new URL("./tests/mocks/next-navigation.ts", import.meta.url),
       ),
+      "next/headers": fileURLToPath(
+        new URL("./tests/mocks/next-headers.ts", import.meta.url),
+      ),
     },
   },
   test: {

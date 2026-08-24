@@ -38,9 +38,10 @@ function CharacterCard({
 }) {
   const portrait = (
     <>
-      {/* Native images preserve the source wiki's pixel-art rendering. */}
+      {/* Native local images keep the placeholder pixel art crisp. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        className="pixel-art"
         src={character.portrait}
         alt=""
         width="96"

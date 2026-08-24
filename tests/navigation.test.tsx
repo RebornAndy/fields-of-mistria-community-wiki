@@ -58,6 +58,18 @@ describe("wiki navigation", () => {
     ).toBeInTheDocument();
   });
 
+  it("localizes the Chinese search submit action", () => {
+    render(
+      <WikiShell locale="zh">
+        <p>Article</p>
+      </WikiShell>,
+    );
+
+    expect(
+      screen.getByRole("button", { name: "\u641c\u7d22" }),
+    ).toBeInTheDocument();
+  });
+
   it("shows an inline no-results state for an unknown search", () => {
     render(
       <WikiShell locale="en">
