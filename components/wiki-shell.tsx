@@ -36,8 +36,18 @@ export function WikiShell({
       </header>
       <main className="wiki-content">{children}</main>
       <footer className="wiki-footer">
-        <span>Fields of Mistria Wiki</span>
-        <span>{copy.communityReference}</span>
+        <div className="wiki-footer-about">
+          <strong>Fields of Mistria Wiki</strong>
+          <p>{copy.footerAbout}</p>
+          <p>{copy.footerDescription}</p>
+        </div>
+        <nav aria-label={copy.communityReference} className="wiki-footer-links">
+          <strong>{copy.communityReference}</strong>
+          <a href="https://www.fieldsofmistria.com/">{copy.officialWebsite}</a>
+          <a href="https://store.steampowered.com/app/2142790/Fields_of_Mistria/">Steam</a>
+          <a href="https://www.youtube.com/@fieldsofmistria">YouTube</a>
+          <a href="https://steamcommunity.com/app/2142790">{copy.steamCommunity}</a>
+        </nav>
       </footer>
     </div>
   );

@@ -110,6 +110,8 @@ describe("wiki navigation", () => {
     expect(screen.getByRole("search")).toHaveAttribute("aria-label", "搜索");
     expect(screen.getByText("社区参考资料")).toBeInTheDocument();
     expect(screen.queryByText("Community reference")).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "官方网站" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Steam 社区" })).toBeInTheDocument();
   });
 
   it("exposes search with an accessible label", () => {

@@ -290,6 +290,29 @@ button {
   color: var(--wiki-muted);
 }
 
+.home-hero {
+  max-width: 54rem;
+}
+
+.home-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  padding: 0;
+  margin: 1.2rem 0 0;
+  list-style: none;
+}
+
+.home-stats li {
+  padding: 0.4rem 0.65rem;
+  color: var(--wiki-evergreen);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: #fcf6e5;
+  border: 1px solid var(--wiki-border);
+}
+
 .translation-fallback-notice {
   padding: 0.75rem 0.9rem;
   margin: 0 0 1.25rem;
@@ -344,12 +367,95 @@ button {
 }
 
 .portal-links a {
-  font-weight: 700;
   background: rgba(143, 54, 80, 0.06);
+}
+
+.portal-links strong,
+.portal-links small {
+  display: block;
+}
+
+.portal-links small {
+  margin-top: 0.2rem;
+  color: var(--wiki-muted);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.45;
 }
 
 .portal-links span {
   color: var(--wiki-muted);
+}
+
+.game-overview {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+  padding: 1.25rem;
+  background: #fcf6e5;
+  border: 1px solid var(--wiki-border);
+  box-shadow: inset 0 4px 0 var(--wiki-fern);
+}
+
+.game-overview h2,
+.home-closing h2 {
+  margin-top: 0;
+}
+
+.game-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  border: solid var(--wiki-border);
+  border-width: 1px 0 0 1px;
+}
+
+.game-facts div {
+  padding: 0.65rem;
+  border: solid var(--wiki-border);
+  border-width: 0 1px 1px 0;
+}
+
+.game-facts dt {
+  color: var(--wiki-muted);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.game-facts dd {
+  margin: 0.18rem 0 0;
+  color: var(--wiki-evergreen);
+  font-weight: 700;
+}
+
+.home-closing {
+  margin-top: 1rem;
+  padding: 1.25rem;
+  text-align: center;
+  background: #f2ead4;
+  border: 1px solid var(--wiki-border);
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.home-actions a {
+  padding: 0.6rem 0.85rem;
+  color: #fffaf0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  background: var(--wiki-berry);
+  border: 1px solid var(--wiki-berry-dark);
 }
 
 .character-directory {
@@ -646,6 +752,32 @@ button {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.82rem;
   background: var(--wiki-night);
+}
+
+.wiki-footer-about {
+  max-width: 42rem;
+}
+
+.wiki-footer p {
+  margin: 0.45rem 0 0;
+  line-height: 1.5;
+}
+
+.wiki-footer-links {
+  display: grid;
+  align-content: start;
+  gap: 0.4rem;
+  min-width: 10rem;
+}
+
+.wiki-footer-links a {
+  color: #fff7dc;
+}
+
+@media (min-width: 760px) {
+  .game-overview {
+    grid-template-columns: minmax(0, 1.4fr) minmax(17rem, 0.8fr);
+  }
 }
 
 @media (max-width: 640px) {

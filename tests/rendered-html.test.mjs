@@ -31,7 +31,11 @@ test("server-renders the Fields of Mistria wiki foundation", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>Fields of Mistria Wiki<\/title>/i);
+  assert.match(
+    html,
+    /<title>Fields of Mistria Wiki — Guides, Gifts &amp; Romance<\/title>/i,
+  );
+  assert.match(html, /href="\/fields-of-mistria-favicon-512\.png"/i);
   assert.match(html, /Fields of Mistria Wiki/);
   assert.doesNotMatch(html, /codex-preview|Building your site|react-loading-skeleton/i);
 });

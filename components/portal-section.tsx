@@ -3,6 +3,7 @@ import { useId } from "react";
 export type PortalLink = {
   label: string;
   href?: string;
+  description?: string;
 };
 
 export function PortalSection({
@@ -21,9 +22,15 @@ export function PortalSection({
         {links.map((link) => (
           <li key={link.label}>
             {link.href ? (
-              <a href={link.href}>{link.label}</a>
+              <a aria-label={link.label} href={link.href}>
+                <strong>{link.label}</strong>
+                {link.description ? <small>{link.description}</small> : null}
+              </a>
             ) : (
-              <span>{link.label}</span>
+              <span>
+                <strong>{link.label}</strong>
+                {link.description ? <small>{link.description}</small> : null}
+              </span>
             )}
           </li>
         ))}

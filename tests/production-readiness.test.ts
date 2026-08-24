@@ -46,7 +46,10 @@ describe("production readiness", () => {
     expect(metadata.metadataBase?.toString()).toBe(
       "https://wiki.example.test/",
     );
-    expect(metadata.openGraph?.title).toBe("Fields of Mistria Wiki");
+    expect(metadata.openGraph?.title).toBe(
+      "Fields of Mistria Wiki — Guides, Gifts & Romance",
+    );
+    expect(metadata.keywords).toContain("Fields of Mistria");
     expect(
       typeof socialImage === "object" && socialImage && "url" in socialImage
         ? socialImage.url.toString()
@@ -148,8 +151,7 @@ describe("production readiness", () => {
     ) as { name: string };
     const readme = await readFile(join(projectRoot, "README.md"), "utf8");
     const favicon = await readFile(
-      join(projectRoot, "public/favicon.svg"),
-      "utf8",
+      join(projectRoot, "public/fields-of-mistria-favicon-512.png"),
     );
 
     expect(packageJson.name).toBe("fields-of-mistria-community-wiki");
@@ -164,9 +166,8 @@ describe("production readiness", () => {
     ]) {
       expect(readme).toContain(route);
     }
-    expect(favicon).toContain("#214b47");
-    expect(favicon).toContain("#fbf6e8");
-    expect(favicon).toContain("#8f3650");
+    expect(favicon.subarray(1, 4).toString("ascii")).toBe("PNG");
+    expect(favicon.byteLength).toBeGreaterThan(100_000);
 
     for (const starterAsset of ["file.svg", "globe.svg", "window.svg"]) {
       await expect(

@@ -9,6 +9,45 @@ import ChineseCharactersPage from "../app/zh/characters/page";
 import ChineseAdelinePage from "../app/zh/characters/adeline/page";
 
 describe("portal pages", () => {
+  it("presents the supplied English game overview and official resources", () => {
+    render(<HomePage />);
+
+    expect(
+      screen.getByRole("heading", { name: "Fields of Mistria", level: 1 }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Released Aug 5, 2026")).toBeInTheDocument();
+    expect(screen.getByText("Latest Patch v1.0.4")).toBeInTheDocument();
+    expect(screen.getByText(/essential controls, stamina management/i)).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "What is Fields of Mistria?" }),
+    ).toBeInTheDocument();
+    const resources = screen.getByRole("region", { name: "Official & Community" });
+    expect(within(resources).getByRole("link", { name: "Official Website" })).toHaveAttribute(
+      "href",
+      "https://www.fieldsofmistria.com/",
+    );
+    expect(within(resources).getByRole("link", { name: "Play on Steam" })).toHaveAttribute(
+      "href",
+      "https://store.steampowered.com/app/2142790/Fields_of_Mistria/",
+    );
+    expect(screen.getByText(/independent fan-made guide website/i)).toBeInTheDocument();
+  });
+
+  it("presents a localized Chinese overview and labels the Discord as unofficial", () => {
+    render(<ChineseHomePage />);
+
+    expect(
+      screen.getByRole("heading", { name: "Fields of Mistria", level: 1 }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("2026 年 8 月 5 日正式发布")).toBeInTheDocument();
+    expect(screen.getByText(/基础操作、体力管理和每日优先事项/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Fields of Mistria 是什么？" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "非官方 Discord 社区" }),
+    ).toHaveAttribute("href", "https://discord.com/invite/unofficial-fom");
+    expect(screen.getByText(/并非 NPC Studio 官方网站/)).toBeInTheDocument();
+  });
+
   it("links the home portal to the character directory", () => {
     render(<HomePage />);
     const characterPanel = screen.getByRole("region", {

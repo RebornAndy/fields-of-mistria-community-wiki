@@ -10,6 +10,10 @@ export type UiDictionary = {
   primaryNavigation: string;
   searchLandmark: string;
   communityReference: string;
+  footerAbout: string;
+  footerDescription: string;
+  officialWebsite: string;
+  steamCommunity: string;
   breadcrumb: string;
   contents: string;
   relatedNavigation: string;
@@ -27,6 +31,12 @@ const dictionaries: Record<Locale, UiDictionary> = {
     primaryNavigation: "Primary navigation",
     searchLandmark: "Search",
     communityReference: "Community reference",
+    footerAbout:
+      "Fields of Mistria Wiki is an independent fan-made guide website covering farming, fishing, gifts, characters, romance, marriage, mods, and game updates. It is not affiliated with or endorsed by NPC Studio.",
+    footerDescription:
+      "A magical farming and life-sim RPG with 30+ villagers, 12 marriage candidates, ancient ruins, and 69 Steam achievements.",
+    officialWebsite: "Official Website",
+    steamCommunity: "Steam Community",
     breadcrumb: "Breadcrumb",
     contents: "Contents",
     relatedNavigation: "Related navigation",
@@ -43,6 +53,12 @@ const dictionaries: Record<Locale, UiDictionary> = {
     primaryNavigation: "主导航",
     searchLandmark: "搜索",
     communityReference: "社区参考资料",
+    footerAbout:
+      "Fields of Mistria Wiki 是独立的玩家制作指南网站，涵盖耕种、钓鱼、礼物、角色、恋爱、婚姻、模组与游戏更新；本站并非 NPC Studio 官方网站，也未获得其背书。",
+    footerDescription:
+      "一款拥有 30 多位村民、12 位可结婚角色、古代遗迹与 69 项 Steam 成就的魔法农场生活模拟 RPG。",
+    officialWebsite: "官方网站",
+    steamCommunity: "Steam 社区",
     breadcrumb: "面包屑",
     contents: "目录",
     relatedNavigation: "相关导航",
