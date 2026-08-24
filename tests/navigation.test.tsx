@@ -46,6 +46,72 @@ describe("wiki navigation", () => {
     );
   });
 
+  it("marks each localized wiki content scope with its document language", () => {
+    const { rerender } = render(
+      <WikiShell locale="en">
+        <p>Article</p>
+      </WikiShell>,
+    );
+
+    expect(screen.getByText("Article").closest(".wiki-page")).toHaveAttribute(
+      "lang",
+      "en",
+    );
+
+    rerender(
+      <WikiShell locale="zh">
+        <p>文章</p>
+      </WikiShell>,
+    );
+
+    expect(screen.getByText("文章").closest(".wiki-page")).toHaveAttribute(
+      "lang",
+      "zh-CN",
+    );
+  });
+
+  it("marks an unavailable translation when falling back to its directory", () => {
+    navigation.pathname = "/locations/mistria";
+
+    const { rerender } = render(
+      <WikiShell locale="en">
+        <p>Article</p>
+      </WikiShell>,
+    );
+
+    expect(screen.getByRole("link", { name: "中文" })).toHaveAttribute(
+      "href",
+      "/zh/characters?translation=fallback",
+    );
+
+    navigation.pathname = "/zh/locations/mistria";
+    rerender(
+      <WikiShell locale="zh">
+        <p>文章</p>
+      </WikiShell>,
+    );
+
+    expect(screen.getByRole("link", { name: "English" })).toHaveAttribute(
+      "href",
+      "/characters?translation=fallback",
+    );
+  });
+
+  it("localizes Chinese shell landmark labels and footer copy", () => {
+    render(
+      <WikiShell locale="zh">
+        <p>文章</p>
+      </WikiShell>,
+    );
+
+    expect(
+      screen.getByRole("navigation", { name: "主导航" }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("search")).toHaveAttribute("aria-label", "搜索");
+    expect(screen.getByText("社区参考资料")).toBeInTheDocument();
+    expect(screen.queryByText("Community reference")).not.toBeInTheDocument();
+  });
+
   it("exposes search with an accessible label", () => {
     render(
       <WikiShell locale="en">

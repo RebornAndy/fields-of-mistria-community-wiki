@@ -75,8 +75,11 @@ a:hover {
 }
 
 :focus-visible {
-  outline: 3px solid #f5ca5d;
-  outline-offset: 3px;
+  position: relative;
+  z-index: 1;
+  outline: 3px solid var(--wiki-night);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--wiki-paper);
 }
 
 button,
@@ -285,6 +288,15 @@ button {
 .portal-intro > :last-child,
 .directory-intro > :last-child {
   color: var(--wiki-muted);
+}
+
+.translation-fallback-notice {
+  padding: 0.75rem 0.9rem;
+  margin: 0 0 1.25rem;
+  color: var(--wiki-ink);
+  background: #fcf6e5;
+  border: 1px solid var(--wiki-border);
+  border-left: 4px solid var(--wiki-berry);
 }
 
 .page-kicker {

@@ -67,7 +67,12 @@ export function WikiSearch({ locale }: { locale: Locale }) {
   }
 
   return (
-    <form className="wiki-search" onSubmit={search} role="search">
+    <form
+      aria-label={copy.searchLandmark}
+      className="wiki-search"
+      onSubmit={search}
+      role="search"
+    >
       <label className="sr-only" htmlFor={`wiki-search-${locale}`}>
         {copy.search}
       </label>

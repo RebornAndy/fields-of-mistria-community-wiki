@@ -7,6 +7,13 @@ export type UiDictionary = {
   searchAction: string;
   noResults: string;
   language: string;
+  primaryNavigation: string;
+  searchLandmark: string;
+  communityReference: string;
+  breadcrumb: string;
+  contents: string;
+  relatedNavigation: string;
+  translationFallback: string;
 };
 
 const dictionaries: Record<Locale, UiDictionary> = {
@@ -17,6 +24,14 @@ const dictionaries: Record<Locale, UiDictionary> = {
     searchAction: "Search",
     noResults: "No matching page found.",
     language: "Language",
+    primaryNavigation: "Primary navigation",
+    searchLandmark: "Search",
+    communityReference: "Community reference",
+    breadcrumb: "Breadcrumb",
+    contents: "Contents",
+    relatedNavigation: "Related navigation",
+    translationFallback:
+      "This page is not available in English yet. Showing the character directory instead.",
   },
   zh: {
     home: "首页",
@@ -25,6 +40,13 @@ const dictionaries: Record<Locale, UiDictionary> = {
     searchAction: "搜索",
     noResults: "没有找到匹配页面。",
     language: "语言",
+    primaryNavigation: "主导航",
+    searchLandmark: "搜索",
+    communityReference: "社区参考资料",
+    breadcrumb: "面包屑",
+    contents: "目录",
+    relatedNavigation: "相关导航",
+    translationFallback: "此页面暂未提供简体中文版本，已为你显示角色目录。",
   },
 };
 

@@ -1,100 +1,66 @@
-# vinext-starter
+# Fields of Mistria Community Wiki
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+A locally authored, bilingual community wiki for *Fields of Mistria*. English
+is the default language and Simplified Chinese pages live under `/zh`.
 
-## Prerequisites
+## Routes
 
-- Node.js `>=22.13.0`
+The first release contains six complete routes:
 
-## Quick Start
+- `/` — English portal
+- `/characters` — English character directory
+- `/characters/adeline` — English Adeline article
+- `/zh` — Simplified Chinese portal
+- `/zh/characters` — Simplified Chinese character directory
+- `/zh/characters/adeline` — Simplified Chinese Adeline article
 
-```bash
-npm install
-npm run dev
-npm run build
+The language switcher keeps visitors on the equivalent page when a translation
+exists. Missing translations fall back to the target language's character
+directory with a localized notice.
+
+## Content and project layout
+
+- `app/` contains the six routes, root metadata, and global styles.
+- `components/` contains the shared wiki shell, navigation, directory, search,
+  fallback notice, and article layouts.
+- `content/en/` and `content/zh/` contain local MDX article bodies.
+- `lib/` contains locale dictionaries, character data, content loading, and MDX
+  heading extraction.
+- `public/images/` contains the original local character artwork and attribution
+  notes.
+- `tests/` contains component, content, accessibility, identity, and rendered
+  worker coverage.
+
+## Requirements
+
+- Node.js 22.13.0 or newer
+- Windows PowerShell or another command shell
+
+## Windows commands
+
+Use `npm.cmd` in PowerShell so the commands work even when local script
+execution policy blocks `npm.ps1`.
+
+```powershell
+npm.cmd install
+npm.cmd run dev
 ```
 
-This starter does not use `wrangler.jsonc`.
+The development server runs until you stop it with `Ctrl+C`. In a second
+PowerShell window, run the checks independently:
 
-## Included Shape
-
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-Signed-in visitors receive both `oai-authenticated-user-id` and `oai-authenticated-user-email`. Private Sites require every visitor to sign in; public Sites may also have anonymous visitors, for whom neither header is present.
-
-The user ID is stable for the same user on the same Site and different across Sites. Email and name are intended for display or contact purposes.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const userId = requestHeaders.get("oai-authenticated-user-id");
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
+```powershell
+npm.cmd test -- --run
+npm.cmd run lint
+npm.cmd run build
+node --test tests/rendered-html.test.mjs
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
+`npm.cmd run test:rendered` is also available when a fresh production build and
+the rendered-worker suite should run together.
 
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
+## Production shape
 
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
-
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
-
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
-
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
-
-## Useful Commands
-
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
-
-## Learn More
-
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+`npm.cmd run build` creates the vinext/Cloudflare Worker output in `dist/`.
+This repository does not require a database for the current read-only wiki and
+does not include deployment as part of the local verification workflow.

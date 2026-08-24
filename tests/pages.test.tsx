@@ -20,8 +20,8 @@ describe("portal pages", () => {
     ).toHaveAttribute("href", "/characters");
   });
 
-  it("groups Adeline under romanceable characters", () => {
-    render(<CharactersPage />);
+  it("groups Adeline under romanceable characters", async () => {
+    render(await CharactersPage());
     expect(
       screen.getByRole("heading", { name: "Romanceable Characters" }),
     ).toBeInTheDocument();
@@ -31,22 +31,22 @@ describe("portal pages", () => {
     );
   });
 
-  it("uses locale-correct Chinese routes", () => {
+  it("uses locale-correct Chinese routes", async () => {
     render(<ChineseHomePage />);
     const characterPanel = screen.getByRole("region", { name: "角色" });
     expect(
       within(characterPanel).getByRole("link", { name: "浏览角色" }),
     ).toHaveAttribute("href", "/zh/characters");
 
-    render(<ChineseCharactersPage />);
+    render(await ChineseCharactersPage());
     expect(screen.getByRole("link", { name: /阿德琳/ })).toHaveAttribute(
       "href",
       "/zh/characters/adeline",
     );
   });
 
-  it("renders planned characters as cards without broken links", () => {
-    render(<CharactersPage />);
+  it("renders planned characters as cards without broken links", async () => {
+    render(await CharactersPage());
     const eilandCard = screen.getByRole("article", { name: "Eiland" });
 
     expect(within(eilandCard).queryByRole("link")).not.toBeInTheDocument();
@@ -67,6 +67,39 @@ describe("portal pages", () => {
       screen.getByRole("heading", { name: "阿德琳", level: 1 }),
     ).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "礼物" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("navigation", { name: "面包屑" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("navigation", { name: "相关导航" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("navigation", { name: "目录" }),
+    ).toBeInTheDocument();
+  });
+
+  it("shows an English notice after a missing-translation fallback", async () => {
+    render(
+      await CharactersPage({
+        searchParams: Promise.resolve({ translation: "fallback" }),
+      }),
+    );
+
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "This page is not available in English yet. Showing the character directory instead.",
+    );
+  });
+
+  it("shows a Chinese notice after a missing-translation fallback", async () => {
+    render(
+      await ChineseCharactersPage({
+        searchParams: Promise.resolve({ translation: "fallback" }),
+      }),
+    );
+
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "此页面暂未提供简体中文版本，已为你显示角色目录。",
+    );
   });
 
   it("renders branded recovery links for unknown pages", () => {

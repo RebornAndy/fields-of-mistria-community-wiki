@@ -13,7 +13,7 @@ export function WikiShell({
   const copy = ui(locale);
 
   return (
-    <div className="wiki-page">
+    <div className="wiki-page" lang={locale === "zh" ? "zh-CN" : "en"}>
       <header className="wiki-chrome">
         <div className="wiki-utility-bar">
           <span>Fields of Mistria Wiki</span>
@@ -27,7 +27,7 @@ export function WikiShell({
           </a>
         </div>
         <div className="wiki-navigation-row">
-          <nav aria-label="Primary navigation" className="wiki-primary-nav">
+          <nav aria-label={copy.primaryNavigation} className="wiki-primary-nav">
             <a href={localizePath("/", locale)}>{copy.home}</a>
             <a href={localizePath("/characters", locale)}>{copy.characters}</a>
           </nav>
@@ -37,7 +37,7 @@ export function WikiShell({
       <main className="wiki-content">{children}</main>
       <footer className="wiki-footer">
         <span>Fields of Mistria Wiki</span>
-        <span>Community reference</span>
+        <span>{copy.communityReference}</span>
       </footer>
     </div>
   );

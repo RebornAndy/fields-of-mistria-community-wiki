@@ -3,7 +3,7 @@ import EnglishAdelineContent from "../content/en/characters/adeline.mdx";
 import ChineseAdelineContent from "../content/zh/characters/adeline.mdx";
 import type { CharacterRecord } from "../lib/characters";
 import type { CharacterArticle } from "../lib/content";
-import { type Locale, localizePath } from "../lib/i18n";
+import { type Locale, localizePath, ui } from "../lib/i18n";
 import { extractArticleHeadings } from "../lib/mdx";
 import { CharacterInfobox } from "./character-infobox";
 
@@ -11,8 +11,6 @@ const articleCopy = {
   en: {
     home: "Home",
     characters: "Characters",
-    contents: "Contents",
-    relatedNavigation: "Related navigation",
     gifts: "Gifts",
     heartEvents: "Heart Events",
     schedule: "Schedule",
@@ -23,8 +21,6 @@ const articleCopy = {
   zh: {
     home: "首页",
     characters: "角色",
-    contents: "目录",
-    relatedNavigation: "相关导航",
     gifts: "礼物",
     heartEvents: "好感事件",
     schedule: "日程",
@@ -44,10 +40,14 @@ const articleComponents: Record<
 
 function RelatedNavigation({ locale }: { locale: Locale }) {
   const copy = articleCopy[locale];
+  const landmarkCopy = ui(locale);
 
   return (
-    <nav className="article-related" aria-label={copy.relatedNavigation}>
-      <h2>{copy.relatedNavigation}</h2>
+    <nav
+      className="article-related"
+      aria-label={landmarkCopy.relatedNavigation}
+    >
+      <h2>{landmarkCopy.relatedNavigation}</h2>
       <ul>
         <li className="article-related-planned">
           <a href="#gifts">{copy.gifts}</a>
@@ -83,6 +83,7 @@ export async function ArticleLayout({
   character: CharacterRecord;
 }) {
   const copy = articleCopy[locale];
+  const landmarkCopy = ui(locale);
   const headings = extractArticleHeadings(article.source);
   const MdxContent = articleComponents[locale][article.frontmatter.slug];
 
@@ -94,7 +95,7 @@ export async function ArticleLayout({
 
   return (
     <article className="character-article">
-      <nav className="breadcrumbs" aria-label="Breadcrumb">
+      <nav className="breadcrumbs" aria-label={landmarkCopy.breadcrumb}>
         <ol>
           <li>
             <a href={localizePath("/", locale)}>{copy.home}</a>
@@ -121,8 +122,8 @@ export async function ArticleLayout({
         </aside>
 
         <div className="article-main">
-          <nav className="article-toc" aria-label={copy.contents}>
-            <h2>{copy.contents}</h2>
+          <nav className="article-toc" aria-label={landmarkCopy.contents}>
+            <h2>{landmarkCopy.contents}</h2>
             <ol>
               {headings.map((heading) => (
                 <li key={heading.id}>

@@ -8,11 +8,13 @@ const implementedPages = new Set(["/", "/characters", "/characters/adeline"]);
 function pagePathForLocale(pathname: string | null, locale: Locale) {
   const currentPath = pathname ?? "/";
   const unlocalizedPath = currentPath.replace(/^\/zh(?=\/|$)/, "") || "/";
-  const destination = implementedPages.has(unlocalizedPath)
-    ? unlocalizedPath
-    : "/characters";
+  const hasTranslation = implementedPages.has(unlocalizedPath);
+  const destination = hasTranslation ? unlocalizedPath : "/characters";
+  const localizedDestination = switchLocalePath(destination, locale);
 
-  return switchLocalePath(destination, locale);
+  return hasTranslation
+    ? localizedDestination
+    : `${localizedDestination}?translation=fallback`;
 }
 
 export function LanguageSwitcher({ locale }: { locale: Locale }) {
