@@ -26,9 +26,8 @@ describe("production readiness", () => {
     expect(metadata.twitter?.card).toBe("summary_large_image");
   });
 
-  it("ships local WebP visual assets and the generated social card", async () => {
+  it("ships only original local visual assets and the generated social card", async () => {
     const assetPaths = [
-      "public/images/wiki-background.webp",
       "public/images/characters/adeline.webp",
       "public/images/characters/eiland.webp",
       "public/images/characters/balor.webp",
@@ -42,14 +41,21 @@ describe("production readiness", () => {
       );
     }
 
-    const background = await readFile(
-      join(projectRoot, "public/images/wiki-background.webp"),
-    );
-    expect(background.subarray(0, 4).toString("ascii")).toBe("RIFF");
-    expect(background.subarray(8, 12).toString("ascii")).toBe("WEBP");
+    await expect(
+      stat(join(projectRoot, "public/images/wiki-background.webp")),
+    ).rejects.toMatchObject({ code: "ENOENT" });
 
     const socialCard = await readFile(join(projectRoot, "public/og.png"));
     expect(socialCard.subarray(1, 4).toString("ascii")).toBe("PNG");
+  });
+
+  it("uses an original code-only backdrop with no external background image", async () => {
+    const css = await readFile(join(projectRoot, "app/globals.css"), "utf8");
+
+    expect(css).not.toContain("wiki-background.webp");
+    expect(css).not.toMatch(/url\([^)]*wiki-background/i);
+    expect(css).toContain("radial-gradient");
+    expect(css).toContain("linear-gradient");
   });
 
   it("scopes pixelated rendering to intentional pixel-art assets", async () => {

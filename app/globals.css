@@ -31,9 +31,35 @@ html {
 body {
   margin: 0;
   min-width: 0;
+  background-color: var(--wiki-night);
   background:
-    linear-gradient(rgba(11, 39, 42, 0.82), rgba(11, 39, 42, 0.93)),
-    url("/images/wiki-background.webp") center top / cover fixed;
+    linear-gradient(rgba(20, 45, 51, 0.08), rgba(11, 39, 42, 0.38)),
+    radial-gradient(circle at 8% 10%, #f8df9b 0 2px, transparent 3px),
+    radial-gradient(circle at 19% 22%, #f5eee0 0 1px, transparent 2px),
+    radial-gradient(circle at 83% 14%, #f8df9b 0 2px, transparent 3px),
+    radial-gradient(circle at 94% 28%, #f5eee0 0 1px, transparent 2px),
+    conic-gradient(
+        from 150deg at 50% 100%,
+        transparent 0 60deg,
+        rgba(84, 122, 97, 0.72) 60deg 120deg,
+        transparent 120deg
+      )
+      0 100% / 120px 220px repeat-x,
+    conic-gradient(
+        from 150deg at 50% 100%,
+        transparent 0 60deg,
+        rgba(33, 75, 71, 0.96) 60deg 120deg,
+        transparent 120deg
+      )
+      60px 100% / 120px 170px repeat-x,
+    repeating-linear-gradient(
+        90deg,
+        rgba(20, 45, 51, 0.88) 0 9px,
+        rgba(24, 55, 58, 0.88) 9px 18px
+      )
+      0 100% / 100% 3rem no-repeat,
+    linear-gradient(180deg, #142d33 0%, #18373a 54%, #10272c 100%);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: Georgia, "Noto Serif SC", serif;
 }
