@@ -22,8 +22,9 @@ export default async function CharactersPage({
         <p className="page-kicker">People of Mistria</p>
         <h1>Characters</h1>
         <p>
-          Meet the residents, visitors, and extraordinary beings who shape life
-          in Mistria.
+          Browse all 34 residents, visitors, animals, and extraordinary beings
+          who shape life in Mistria. Vendor inventories may rotate with
+          Saturday Market availability and game progression.
         </p>
       </header>
       <CharacterGrid locale="en" characters={getCharacters("en")} />

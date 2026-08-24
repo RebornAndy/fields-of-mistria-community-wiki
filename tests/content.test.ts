@@ -52,6 +52,38 @@ describe("character content", () => {
     );
   });
 
+  it("ships the complete 34-character roster in both locales", () => {
+    for (const locale of ["en", "zh"] as const) {
+      const roster = getCharacters(locale);
+
+      expect(roster).toHaveLength(34);
+      expect(new Set(roster.map((character) => character.slug)).size).toBe(34);
+    }
+  });
+
+  it("keeps the supplied category totals and romance classifications", () => {
+    const roster = getCharacters("en");
+    const categoryCounts = roster.reduce<Record<string, number>>(
+      (counts, character) => ({
+        ...counts,
+        [character.category]: (counts[character.category] ?? 0) + 1,
+      }),
+      {},
+    );
+
+    expect(categoryCounts).toEqual({
+      romanceable: 10,
+      "non-romanceable": 14,
+      "market-vendor": 8,
+      special: 2,
+    });
+    expect(getCharacter("en", "balor")?.relationshipStatus).toBe(
+      "Romance and marriage candidate",
+    );
+    expect(getCharacter("en", "eiland")?.category).toBe("romanceable");
+    expect(getCharacter("en", "seridia")?.category).toBe("special");
+  });
+
   it("returns null for an exact locale or slug mismatch", () => {
     expect(getCharacter("en", "阿德琳")).toBeNull();
     expect(getCharacter("zh", "Adeline")).toBeNull();

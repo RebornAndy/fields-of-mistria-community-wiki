@@ -70,6 +70,34 @@ describe("portal pages", () => {
     );
   });
 
+  it("renders the complete English roster with supplied profile details", async () => {
+    render(await CharactersPage());
+
+    expect(screen.getAllByRole("article")).toHaveLength(34);
+    expect(screen.getByRole("article", { name: "Balor" })).toHaveTextContent(
+      "Balor’s Wagon",
+    );
+    expect(screen.getByRole("article", { name: "Celine" })).toHaveTextContent(
+      "Daughter of Holt and Nora",
+    );
+    expect(screen.getByRole("heading", { name: "Family and Relationship Map" })).toBeInTheDocument();
+    expect(screen.getByText("Total directory characters")).toHaveTextContent(
+      "Total directory characters",
+    );
+    expect(screen.getByText("34")).toBeInTheDocument();
+  });
+
+  it("renders the complete localized Chinese roster", async () => {
+    render(await ChineseCharactersPage());
+
+    expect(screen.getAllByRole("article")).toHaveLength(34);
+    expect(screen.getByRole("article", { name: "巴洛尔" })).toHaveTextContent(
+      "巴洛尔货车",
+    );
+    expect(screen.getByRole("heading", { name: "家庭与关系图" })).toBeInTheDocument();
+    expect(screen.getByText("目录角色总数")).toBeInTheDocument();
+  });
+
   it("uses locale-correct Chinese routes", async () => {
     render(<ChineseHomePage />);
     const characterPanel = screen.getByRole("region", { name: "角色" });

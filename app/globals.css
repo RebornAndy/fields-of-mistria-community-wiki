@@ -460,50 +460,84 @@ button {
 
 .character-directory {
   display: grid;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .character-group h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
   margin: 0 0 0.8rem;
   font-size: 1.4rem;
 }
 
+.character-group-count {
+  display: inline-grid;
+  min-width: 1.7rem;
+  min-height: 1.7rem;
+  place-items: center;
+  color: #fffaf0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.72rem;
+  background: var(--wiki-berry);
+  border-radius: 999px;
+}
+
 .character-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
-  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: 1rem;
 }
 
 .character-card {
+  display: grid;
+  align-content: start;
   min-width: 0;
   background: #fcf6e5;
   border: 1px solid var(--wiki-border);
   box-shadow: 0 2px 0 rgba(33, 75, 71, 0.08);
 }
 
-.character-card a,
-.character-card-planned {
+.character-card-heading {
   display: grid;
-  grid-template-columns: 5.25rem minmax(0, 1fr);
+  grid-template-columns: 4.5rem minmax(0, 1fr);
   align-items: center;
-  gap: 0.85rem;
-  min-height: 6.15rem;
-  padding: 0.45rem 0.7rem 0.45rem 0.45rem;
+  gap: 0.75rem;
+  min-height: 5.4rem;
+  padding: 0.55rem;
+}
+
+.character-card-article-link {
   color: inherit;
   text-decoration: none;
 }
 
-.character-card a:hover {
+.character-card-article-link:hover {
   color: var(--wiki-berry-dark);
   background: #fffaf0;
 }
 
+.character-card img,
+.character-card-placeholder {
+  width: 4.5rem;
+  height: 4.5rem;
+  border: 1px solid #cdbf9b;
+}
+
 .character-card img {
-  width: 5.25rem;
-  height: 5.25rem;
   object-fit: contain;
   background: #e8dec2;
-  border: 1px solid #cdbf9b;
+}
+
+.character-card-placeholder {
+  display: grid;
+  place-items: center;
+  color: #fff8e5;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background:
+    linear-gradient(135deg, rgba(248, 223, 155, 0.15), transparent 55%),
+    var(--wiki-evergreen);
 }
 
 .character-card-copy {
@@ -521,6 +555,150 @@ button {
   color: var(--wiki-muted);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.82rem;
+}
+
+.character-card-copy span:first-of-type {
+  color: var(--wiki-berry);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.character-card-details {
+  margin: 0;
+  border-top: 1px solid var(--wiki-border);
+}
+
+.character-card-details > div {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 0.34fr) minmax(0, 1fr);
+  border-bottom: 1px solid rgba(216, 203, 169, 0.75);
+}
+
+.character-card-details > div:last-child {
+  border-bottom: 0;
+}
+
+.character-card-details dt,
+.character-card-details dd {
+  padding: 0.48rem 0.6rem;
+  overflow-wrap: anywhere;
+}
+
+.character-card-details dt {
+  color: var(--wiki-evergreen);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: rgba(84, 122, 97, 0.08);
+}
+
+.character-card-details dd {
+  margin: 0;
+  color: var(--wiki-muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.relationship-map,
+.roster-summary {
+  min-width: 0;
+  padding: 1rem;
+  background: #fcf6e5;
+  border: 1px solid var(--wiki-border);
+  box-shadow: inset 0 4px 0 var(--wiki-fern);
+}
+
+.relationship-map h2,
+.roster-summary h2 {
+  margin-top: 0.25rem;
+}
+
+.relationship-table {
+  display: grid;
+  border: solid var(--wiki-border);
+  border-width: 1px 0 0 1px;
+}
+
+.relationship-row {
+  display: grid;
+  grid-template-columns: minmax(9rem, 0.7fr) minmax(11rem, 1fr) minmax(15rem, 1.4fr);
+}
+
+.relationship-row > * {
+  min-width: 0;
+  padding: 0.55rem 0.65rem;
+  overflow-wrap: anywhere;
+  border: solid var(--wiki-border);
+  border-width: 0 1px 1px 0;
+}
+
+.relationship-row strong {
+  color: var(--wiki-evergreen);
+  background: rgba(84, 122, 97, 0.08);
+}
+
+.relationship-row span {
+  color: var(--wiki-muted);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
+.roster-summary dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.65rem;
+  margin: 0;
+}
+
+.roster-summary dl > div {
+  padding: 0.65rem;
+  background: var(--wiki-paper);
+  border: 1px solid var(--wiki-border);
+}
+
+.roster-summary dt {
+  color: var(--wiki-muted);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.76rem;
+}
+
+.roster-summary dd {
+  margin: 0.25rem 0 0;
+  color: var(--wiki-evergreen);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.roster-summary .roster-total {
+  color: #fffaf0;
+  background: var(--wiki-evergreen);
+}
+
+.roster-summary .roster-total dt,
+.roster-summary .roster-total dd {
+  color: inherit;
+}
+
+@media (max-width: 700px) {
+  .relationship-table {
+    gap: 0.75rem;
+    border: 0;
+  }
+
+  .relationship-row {
+    grid-template-columns: 1fr;
+    border: 1px solid var(--wiki-border);
+  }
+
+  .relationship-row > * {
+    border-width: 0 0 1px;
+  }
+
+  .relationship-row > :last-child {
+    border-bottom: 0;
+  }
 }
 
 .breadcrumbs {
