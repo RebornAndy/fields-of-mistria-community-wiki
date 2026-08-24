@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { generateMetadata } from "../app/layout";
+import { requestHeaders } from "./mocks/next-headers";
 
 const projectRoot = process.cwd();
 
@@ -24,6 +25,32 @@ describe("production readiness", () => {
         : socialImage?.toString(),
     ).toBe("https://wiki.example.test/og.png");
     expect(metadata.twitter?.card).toBe("summary_large_image");
+  });
+
+  it("ignores an untrusted forwarded host when building social metadata", async () => {
+    requestHeaders.set("x-forwarded-host", "attacker.example");
+
+    try {
+      const metadata = await generateMetadata();
+      const openGraphImages = Array.isArray(metadata.openGraph?.images)
+        ? metadata.openGraph.images
+        : [metadata.openGraph?.images];
+      const socialImage = openGraphImages[0];
+
+      expect(metadata.metadataBase?.toString()).toBe(
+        "https://wiki.example.test/",
+      );
+      expect(
+        typeof socialImage === "object" && socialImage && "url" in socialImage
+          ? socialImage.url.toString()
+          : socialImage?.toString(),
+      ).toBe("https://wiki.example.test/og.png");
+      expect(metadata.twitter?.images?.[0].toString()).toBe(
+        "https://wiki.example.test/og.png",
+      );
+    } finally {
+      requestHeaders.delete("x-forwarded-host");
+    }
   });
 
   it("ships only original local visual assets and the generated social card", async () => {

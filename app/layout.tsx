@@ -6,8 +6,7 @@ const title = "Fields of Mistria Wiki";
 const description = "A bilingual community wiki for Fields of Mistria.";
 
 function getRequestOrigin(requestHeaders: Headers) {
-  const forwardedHost = requestHeaders.get("x-forwarded-host")?.split(",")[0];
-  const host = forwardedHost?.trim() || requestHeaders.get("host");
+  const host = requestHeaders.get("host")?.trim();
   const forwardedProtocol = requestHeaders
     .get("x-forwarded-proto")
     ?.split(",")[0]
