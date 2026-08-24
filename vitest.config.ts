@@ -1,7 +1,9 @@
 import { defineConfig } from "vitest/config";
 import { fileURLToPath } from "node:url";
+import { mdxTestPlugins } from "./build/mdx-vite-plugin";
 
 export default defineConfig({
+  plugins: mdxTestPlugins(),
   resolve: {
     alias: {
       "next/navigation": fileURLToPath(

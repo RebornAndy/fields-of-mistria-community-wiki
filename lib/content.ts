@@ -2,6 +2,14 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
 import { z } from "zod";
+import {
+  frontmatter as englishAdelineFrontmatter,
+  source as englishAdelineSource,
+} from "../content/en/characters/adeline.mdx";
+import {
+  frontmatter as chineseAdelineFrontmatter,
+  source as chineseAdelineSource,
+} from "../content/zh/characters/adeline.mdx";
 import type { Locale } from "./i18n";
 
 const frontmatterSchema = z.object({
@@ -12,6 +20,26 @@ const frontmatterSchema = z.object({
 });
 
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+type BundledArticle = {
+  frontmatter: unknown;
+  source: string;
+};
+
+const bundledArticles: Record<Locale, Record<string, BundledArticle>> = {
+  en: {
+    adeline: {
+      frontmatter: englishAdelineFrontmatter,
+      source: englishAdelineSource,
+    },
+  },
+  zh: {
+    adeline: {
+      frontmatter: chineseAdelineFrontmatter,
+      source: chineseAdelineSource,
+    },
+  },
+};
 
 function invalidFrontmatterError(locale: string, slug: string) {
   return new Error(`Invalid frontmatter for ${locale}/${slug}`);
@@ -48,16 +76,27 @@ export async function loadCharacterArticle(
     throw invalidFrontmatterError(locale, slug);
   }
 
-  const file = await readFile(articlePath, "utf8");
-  let parsed: ReturnType<typeof matter>;
+  const bundledArticle = bundledArticles[locale][slug];
+  let data: unknown;
+  let source: string;
 
-  try {
-    parsed = matter(file);
-  } catch {
-    throw invalidFrontmatterError(locale, slug);
+  if (bundledArticle) {
+    data = bundledArticle.frontmatter;
+    source = bundledArticle.source;
+  } else {
+    let parsed: ReturnType<typeof matter>;
+
+    try {
+      parsed = matter(await readFile(articlePath, "utf8"));
+    } catch {
+      throw invalidFrontmatterError(locale, slug);
+    }
+
+    data = parsed.data;
+    source = parsed.content;
   }
 
-  const result = frontmatterSchema.safeParse(parsed.data);
+  const result = frontmatterSchema.safeParse(data);
 
   if (
     !result.success ||
@@ -67,5 +106,5 @@ export async function loadCharacterArticle(
     throw invalidFrontmatterError(locale, slug);
   }
 
-  return { frontmatter: result.data, source: parsed.content };
+  return { frontmatter: result.data, source };
 }

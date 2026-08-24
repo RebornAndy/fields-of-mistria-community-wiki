@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { getCharacter, getCharacters } from "../lib/characters";
@@ -62,6 +62,19 @@ describe("character content", () => {
 
     expect(article.frontmatter.title).toBe("阿德琳");
     expect(article.source).toContain("## 简介");
+  });
+
+  it("loads bundled Adeline content outside the repository cwd", async () => {
+    const cwd = vi.spyOn(process, "cwd").mockReturnValue("Z:\\runtime-bundle");
+
+    try {
+      const article = await loadCharacterArticle("en", "adeline");
+
+      expect(article.frontmatter.title).toBe("Adeline");
+      expect(article.source).toContain("## Gifts");
+    } finally {
+      cwd.mockRestore();
+    }
   });
 
   it("rejects a traversal slug before reading outside its locale directory", async () => {

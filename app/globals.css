@@ -379,6 +379,226 @@ img {
   font-size: 0.82rem;
 }
 
+.breadcrumbs {
+  margin-bottom: 1.15rem;
+  color: var(--wiki-muted);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.8rem;
+}
+
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.breadcrumbs li:not(:last-child)::after {
+  margin-left: 0.4rem;
+  color: #9a8d6d;
+  content: "/";
+}
+
+.article-header {
+  margin-bottom: 1.35rem;
+}
+
+.article-header h1 {
+  margin: 0 0 0.7rem;
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.article-header > :last-child {
+  max-width: 48rem;
+  margin-bottom: 0;
+  color: var(--wiki-muted);
+  font-size: 1.05rem;
+}
+
+.article-grid {
+  display: grid;
+  grid-template-areas: "rail" "main";
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.article-rail {
+  display: grid;
+  grid-area: rail;
+  gap: 1rem;
+}
+
+.article-main {
+  grid-area: main;
+  min-width: 0;
+}
+
+.character-infobox,
+.article-related,
+.article-toc {
+  background: #fcf6e5;
+  border: 1px solid var(--wiki-border);
+  box-shadow: inset 0 4px 0 var(--wiki-fern);
+}
+
+.character-infobox h2,
+.article-related h2,
+.article-toc h2 {
+  margin: 0;
+  padding: 0.75rem 0.9rem 0.55rem;
+  border-bottom-width: 1px;
+  font-size: 1.15rem;
+}
+
+.character-infobox-portrait {
+  aspect-ratio: 1;
+  margin: 0.85rem;
+  background:
+    linear-gradient(rgba(251, 246, 232, 0.35), rgba(251, 246, 232, 0.35)),
+    repeating-linear-gradient(45deg, #d9e1c8 0 8px, #cbd8bc 8px 16px);
+  border: 1px solid #cdbf9b;
+}
+
+.character-infobox-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.character-infobox-role {
+  margin: 0;
+  padding: 0 0.9rem 0.7rem;
+  color: var(--wiki-muted);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.84rem;
+  text-align: center;
+}
+
+.character-infobox dl {
+  margin: 0;
+}
+
+.character-infobox dl > div {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 0.85fr) minmax(0, 1.15fr);
+  border-top: 1px solid var(--wiki-border);
+}
+
+.character-infobox dt,
+.character-infobox dd {
+  padding: 0.58rem 0.7rem;
+  overflow-wrap: anywhere;
+}
+
+.character-infobox dt {
+  color: var(--wiki-evergreen);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: rgba(84, 122, 97, 0.08);
+}
+
+.character-infobox dd {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.article-toc {
+  width: min(100%, 25rem);
+  margin-bottom: 1.4rem;
+}
+
+.article-toc ol,
+.article-related ul {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.7rem 0.9rem 0.85rem 2.15rem;
+  margin: 0;
+}
+
+.article-toc a,
+.article-related a {
+  font-weight: 700;
+}
+
+.article-related ul {
+  padding-left: 2rem;
+}
+
+.article-related li {
+  padding-right: 0.75rem;
+}
+
+.article-related-planned {
+  color: var(--wiki-muted);
+}
+
+.article-related small {
+  display: block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.article-body h2 {
+  margin-top: 1.65rem;
+  scroll-margin-top: 1rem;
+}
+
+.article-body > :first-child {
+  margin-top: 0;
+}
+
+.not-found {
+  max-width: 42rem;
+  padding: clamp(1.25rem, 5vw, 3rem);
+  margin: clamp(1rem, 5vw, 4rem) auto;
+  text-align: center;
+  background: #fcf6e5;
+  border: 1px solid var(--wiki-border);
+  box-shadow: inset 0 5px 0 var(--wiki-berry);
+}
+
+.not-found nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.35rem;
+}
+
+.not-found nav a {
+  padding: 0.65rem 1rem;
+  color: #fffaf0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  background: var(--wiki-berry);
+  border: 1px solid var(--wiki-berry-dark);
+}
+
+.not-found nav a:hover {
+  color: #fff;
+  background: var(--wiki-berry-dark);
+}
+
+@media (min-width: 820px) {
+  .article-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(14rem, 18rem);
+    grid-template-areas: "main rail";
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .article-rail {
+    position: sticky;
+    top: 1rem;
+  }
+}
+
 .wiki-footer {
   display: flex;
   justify-content: space-between;

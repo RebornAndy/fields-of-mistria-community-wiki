@@ -2,8 +2,11 @@ import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import HomePage from "../app/page";
 import CharactersPage from "../app/characters/page";
+import AdelinePage from "../app/characters/adeline/page";
+import NotFound from "../app/not-found";
 import ChineseHomePage from "../app/zh/page";
 import ChineseCharactersPage from "../app/zh/characters/page";
+import ChineseAdelinePage from "../app/zh/characters/adeline/page";
 
 describe("portal pages", () => {
   it("links the home portal to the character directory", () => {
@@ -47,5 +50,33 @@ describe("portal pages", () => {
     const eilandCard = screen.getByRole("article", { name: "Eiland" });
 
     expect(within(eilandCard).queryByRole("link")).not.toBeInTheDocument();
+  });
+
+  it("renders the Adeline infobox and article sections", async () => {
+    render(await AdelinePage());
+    expect(
+      screen.getByRole("heading", { name: "Adeline", level: 1 }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Winter 18")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Gifts" })).toBeInTheDocument();
+  });
+
+  it("renders the localized Chinese Adeline route", async () => {
+    render(await ChineseAdelinePage());
+    expect(
+      screen.getByRole("heading", { name: "阿德琳", level: 1 }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "礼物" })).toBeInTheDocument();
+  });
+
+  it("renders branded recovery links for unknown pages", () => {
+    render(<NotFound />);
+    const recoveryLinks = screen.getByRole("navigation", {
+      name: "Recovery links",
+    });
+
+    expect(
+      within(recoveryLinks).getByRole("link", { name: /Characters/i }),
+    ).toHaveAttribute("href", "/characters");
   });
 });
