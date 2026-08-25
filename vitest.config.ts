@@ -12,6 +12,9 @@ export default defineConfig({
       "next/headers": fileURLToPath(
         new URL("./tests/mocks/next-headers.ts", import.meta.url),
       ),
+      "next/script": fileURLToPath(
+        new URL("./tests/mocks/next-script.tsx", import.meta.url),
+      ),
     },
   },
   test: {

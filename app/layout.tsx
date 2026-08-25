@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import Script from "next/script";
 import "./globals.css";
 
+const googleAnalyticsId = "G-QME6249J8Y";
 const title = "Fields of Mistria Wiki — Guides, Gifts & Romance";
 const description =
   "Master Fields of Mistria with beginner guides, gift lists, character schedules, farming layouts, fishing tips, romance routes, mods, and update tracking.";
@@ -84,6 +86,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>{children}</body>
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${googleAnalyticsId}');`}
+      </Script>
     </html>
   );
 }

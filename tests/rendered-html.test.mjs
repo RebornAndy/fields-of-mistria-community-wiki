@@ -40,6 +40,21 @@ test("server-renders the Fields of Mistria wiki foundation", async () => {
   assert.doesNotMatch(html, /codex-preview|Building your site|react-loading-skeleton/i);
 });
 
+test("server-renders the Google Analytics tag on every locale", async () => {
+  for (const pathname of ["/", "/zh"]) {
+    const response = await render(pathname);
+    assert.equal(response.status, 200, pathname);
+
+    const html = await response.text();
+    assert.match(
+      html,
+      /googletagmanager\.com\/gtag\/js\?id=G-QME6249J8Y/i,
+      pathname,
+    );
+    assert.match(html, /G-QME6249J8Y/, pathname);
+  }
+});
+
 test("server-renders each route with the correct localized content scope", async () => {
   const routeLanguages = [
     ["/", "en"],
